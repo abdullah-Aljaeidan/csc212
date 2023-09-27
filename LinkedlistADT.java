@@ -26,7 +26,7 @@ public class LinkedlistADT {
     public Contact[] searchContacts(String emailAdressBirthday) {
         if (empty())
             return null;
-            //To be changed to linked list..eventually 
+        // To be changed to linked list..eventually
         Contact[] arrayContacts = new Contact[100];
         int countArrayContacts = 0;
         findFirst();
@@ -40,6 +40,15 @@ public class LinkedlistADT {
         }
         return arrayContacts;
 
+    }
+
+    public boolean findContact(int phoneNumber) {
+        findFirst();
+        while (current != null) {
+            if (current.getData().getPhoneNumber() == phoneNumber)
+                return true;
+        }
+        return false;
     }
 
     // Method to check if contact is already in list
@@ -63,7 +72,7 @@ public class LinkedlistADT {
     public boolean addContact(Contact c) {
         Node tmp = new Node(c);
         if (empty()) {
-            head = tmp;
+            current = head = tmp;
             return true;
         } else if (contactIsRepeated(c)) {
             System.out.println("Contact already in list");
@@ -83,4 +92,23 @@ public class LinkedlistADT {
         }
         return false;
     }
+
+    public void delete() {
+        if (current == head) {
+            head = head.getNext();
+        } else {
+            Node tmp = head;
+
+            while (tmp.getNext() != current)
+                tmp = tmp.getNext();
+
+            tmp.setNext(current.getNext());
+        }
+
+        if (current.getNext() == null)
+            current = head;
+        else
+            current = current.getNext();
+    }
+
 }
