@@ -30,4 +30,17 @@ public class listEvent {
         }
     }
 
+    public void findConflict(Event e) {
+        findFirst();
+        while (current != null) {
+            boolean checkDate = current.getData().getDate().equalsIgnoreCase(e.getDate());
+            boolean checkTime = current.getData().getTime().equalsIgnoreCase(e.getTime());
+            if (checkDate && checkTime) {
+                System.out.println("Event conflicts with another event!");
+                return;
+            }
+            addEvent(e);
+        }
+    }
+
 }
