@@ -10,7 +10,27 @@ public class Event {
         this.date = date;
         this.location = location;
         this.time = time;
-        this.eventParticipant = eventParticipant;
+        this.eventParticipant=eventParticipant;
     }
-    
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public Contact getEventParticipant() {
+        return eventParticipant;
+    }
+
 }

@@ -23,23 +23,59 @@ public class LinkedlistADT {
         current = current.getNext();
     }
 
-    public Contact[] searchContacts(String emailAdressBirthday) {
-        if (empty())
-            return null;
-            //To be changed to linked list..eventually 
-        Contact[] arrayContacts = new Contact[100];
-        int countArrayContacts = 0;
+    public void searchContacts(String emailAdressBirthday) {
+        if (empty()) {
+            System.out.println("There are no contacts in the list");
+            return;
+        }
         findFirst();
         while (current != null) {
             boolean checkBirthday = current.getData().getBirthday().equals(emailAdressBirthday);
             boolean checkEmail = current.getData().getEmailAddress().equals(emailAdressBirthday);
             boolean checkAdress = current.getData().getAdress().equals(emailAdressBirthday);
             if (checkAdress || checkBirthday || checkEmail) {
-                arrayContacts[countArrayContacts++] = current.getData();
+                System.out.println(current.getData().toString());
             }
         }
-        return arrayContacts;
+    }
 
+    public void findContact(int phoneNumber) {
+        if (empty()) {
+            System.out.println("List is empty");
+            return;
+        }
+        findFirst();
+        while (current != null) {
+            if (current.getData().getPhoneNumber() == phoneNumber) {
+                System.out.println(current.getData().toString());
+                return;
+            }
+        }
+    }
+
+    public void findContact(String nameString) {
+        if (empty()) {
+            System.out.println("List is empty");
+            return;
+        }
+        findFirst();
+        while (current != null) {
+            if (current.getData().getName().equalsIgnoreCase(nameString)) {
+                System.out.println(current.getData().toString());
+                return;
+            }
+        }
+
+    }
+
+    public void printFirstName() {
+        if (empty()) {
+            System.out.println("No contacts in list!");
+        }
+        findFirst();
+        while (current != null) {
+            System.out.println(current.getData().getFirstName());
+        }
     }
 
     // Method to check if contact is already in list
@@ -59,11 +95,23 @@ public class LinkedlistADT {
         return false;
     }
 
+       public boolean contactExists(String checkName) {
+        if (empty())
+            return false;
+        while (current != null) {
+            if (current.getData().getName().equalsIgnoreCase(checkName))
+                return true;
+            findNext();
+        }
+        return false;
+    }
+    
+    
     // Adds contact to the list with respect to list ordering
     public boolean addContact(Contact c) {
         Node tmp = new Node(c);
         if (empty()) {
-            head = tmp;
+            current = head = tmp;
             return true;
         } else if (contactIsRepeated(c)) {
             System.out.println("Contact already in list");
@@ -82,5 +130,24 @@ public class LinkedlistADT {
             }
         }
         return false;
+    }
+
+    public void delete() {
+        if (current == head) {
+            head = head.getNext();
+        } else {
+            Node tmp = head;
+
+            while (tmp.getNext() != current) {
+                tmp = tmp.getNext();
+            }
+
+            tmp.setNext(current.getNext());
+        }
+
+        if (current.getNext() == null)
+            current = head;
+        else
+            current = current.getNext();
     }
 }
