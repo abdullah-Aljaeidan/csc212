@@ -61,6 +61,22 @@ public class listAllEvents {
 
     }
 
+    public boolean findConflict(String DATE, String TIME) {
+        findFirst();
+        while (current != null) {
+            boolean checkDate = current.getData().getDate().equalsIgnoreCase(DATE);
+            boolean checkTime = current.getData().getTime().equalsIgnoreCase(TIME);
+            if (checkDate && checkTime) {
+            
+                return false;
+            }
+
+        }
+        // addEvent(e);
+        return true;
+
+    }
+
     public boolean empty() {
         return head == null;
     }
@@ -72,7 +88,5 @@ public class listAllEvents {
     public void findNext() {
         current = current.getNext();
     }
-
-    
 
 }

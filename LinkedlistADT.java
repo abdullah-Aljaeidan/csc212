@@ -113,13 +113,16 @@ public class LinkedlistADT {
         if (empty()) {
             current = head = tmp;
             return true;
+       
         } else if (contactIsRepeated(c)) {
             System.out.println("Contact already in list");
             return false;
+       
         } else if (c.compareTo(head.getData()) < 0) {
             tmp.setNext(head);
             head = tmp;
             return true;
+       
         } else {
             while (current.getNext() != null) {
                 if (c.compareTo(current.getNext().getData()) < 0) {
@@ -150,4 +153,61 @@ public class LinkedlistADT {
         else
             current = current.getNext();
     }
+
+    public Contact returnContactbyName(String name){
+        if(empty())
+        return null;
+        
+        findFirst();
+        while(current!=null){
+            if(current.getData().getName().equalsIgnoreCase(name))
+            return current.getData();
+        }
+        return null;
+
+
+    }
+    
+    
+    
+    
+   /*  public void EventAdapter(String name){
+         Contact con =returnContactbyName(name);
+         if(con==null)
+         System.out.println("");
+
+    }
+
+
+
+    /*
+     * title="lunch"
+     * date="2022/2/2"
+     * loc="riyadh"....
+     * time="10:30"
+     * contact name= "aziz"
+     * if(contactExists(aziz) && findConflict(String date, String time)){
+     *   Contact newC = new Contact(returnContactbyname(aziz)) // we dont have to worry wethere if returncontactbyname returns null because contactsExists will return false
+     * Event E1 = new Event(title,date,loc,newC);
+     * addAllevents(E1);
+     * 
+     * 
+     * 
+     * }
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+
+
+
+
 }
