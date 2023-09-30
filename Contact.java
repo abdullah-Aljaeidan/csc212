@@ -1,20 +1,27 @@
 import java.lang.Comparable;
 
 public class Contact implements Comparable {
+    private String firstName;
+    private String lastName;
     private String name;
     private int phoneNumber;
     private String emailAddress;
     private String adress;
     private String birthday;
     private String notes;
+    private listEvent contactEvents;
 
-    public Contact(String name, int phoneNumber, String emailAddress, String adress, String birthday, String notes) {
-        this.name = name;
+    public Contact(String firstName, String lastName, int phoneNumber, String emailAddress, String adress,
+            String birthday, String notes) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.adress = adress;
         this.birthday = birthday;
         this.notes = notes;
+        name = firstName + " " + lastName;
+        contactEvents = new listEvent();
     }
 
     public int compareTo(Object otherContact) {
@@ -68,4 +75,33 @@ public class Contact implements Comparable {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    public listEvent getContactEvents() {
+        return contactEvents;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String toString() {
+        return "Name: " + name + "\n" +
+                "Phone number: " + phoneNumber + "\n" +
+                "Email address: " + emailAddress + "\n" +
+                "Birthday: " + birthday + "\n" +
+                "Notes: " + notes;
+    }
+
 }
