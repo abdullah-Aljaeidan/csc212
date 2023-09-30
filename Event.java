@@ -10,7 +10,35 @@ public class Event {
         this.date = date;
         this.location = location;
         this.time = time;
-        this.eventParticipant = eventParticipant;
+        this.eventParticipant=eventParticipant;
     }
-    
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public Contact getEventParticipant() {
+        return eventParticipant;
+    }
+    public String toString() {
+        String result = "Title: " + this.title + "\n";
+        result += "Date: " + this.date + "\n";
+        result += "Time: " + this.time + "\n";
+        result += "Location: " + this.location + "\n";
+        result += "Contact Name: " + this.eventParticipant.getName() + "\n";
+        return result;
+    }
 }
+
