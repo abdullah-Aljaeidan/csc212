@@ -12,6 +12,9 @@ public class Event {
         this.time = time;
         this.eventParticipant=eventParticipant;
     }
+    public int compareTo(Object otherEvent) {
+        return this.title.compareTo(((Event) otherEvent).title);
+    }
 
     public String getTitle() {
         return title;
