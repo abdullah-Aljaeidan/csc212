@@ -1,35 +1,26 @@
-public class Node{
-    private Contact data;
-    private Node next;
-    private Node previous;
+public class Node<T> {
+    private Node<T> next;
+    private T data;
 
-    public Node(Contact data) {
+    public Node(T data) {
         this.data = data;
-        this.next = null; 
+        this.next = null;
     }
-    public Contact getData() {
+
+    public T getData() {
         return data;
     }
 
-    
-    public void setNext(Node next) {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 
-    public Node getNext() {
+    public Node<T> getNext() {
         return next;
     }
-    public void setData(Contact data) {
+
+    public void setData(T data) {
         this.data = data;
     }
-    public Node getPrevious() {
-        return previous;
-    }
-    public void setPrevious(Node previous) {
-        this.previous = previous;
-    }
-    
+
 }
-
-
-
