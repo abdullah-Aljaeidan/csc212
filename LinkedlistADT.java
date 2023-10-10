@@ -46,7 +46,8 @@ public class LinkedlistADT<T extends Comparable<T>> {
             head.setNext(tmp);
             return;
         } else {
-            while (current != null) {
+            //current or current.getNext()???
+            while (current.getNext() !=  null) {
                 if (val.compareTo(current.getNext().getData()) < 0) {
                     tmp.setNext(current);
                     current = tmp;
