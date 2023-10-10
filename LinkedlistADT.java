@@ -41,20 +41,27 @@ public class LinkedlistADT<T extends Comparable<T>> {
             current = head = tmp;
             return;
         } else if (val.compareTo(head.getData()) < 0) {
-            tmp = head;
-            head = new Node<T>(val);
-            head.setNext(tmp);
+            tmp.setNext(head);
+            head = tmp;
+            current = head;
             return;
         } else {
-            //current or current.getNext()???
-            while (current.getNext() !=  null) {
-                if (val.compareTo(current.getNext().getData()) < 0) {
-                    tmp.setNext(current);
+            findFirst();
+            while (current.getNext() != null) {
+                if (val.compareTo(current.getNext().getData()) > 0) {
+                    tmp.setNext(current.getNext());
+                    current.setNext(tmp);
                     current = tmp;
-                    return;
                 }
             }
-            findNext();
+            if (current.getNext() == null) {
+                tmp.setNext(current.getNext());
+                current.setNext(tmp);
+                current = tmp;
+            } else {
+                findNext();
+            }
+
         }
     }
 

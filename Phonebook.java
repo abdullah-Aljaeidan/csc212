@@ -41,12 +41,13 @@ public class Phonebook<T> {
                     printAllEvents();
                     break;
                 case 8:
+                    System.out.println("Goodbye!");
                     System.exit(0);
                 default:
                     System.out.println("Wrong input! Please enter a valid option.");
             }
 
-        } while (true);
+        } while (option != 8);
     }
 
     private void displayMenu() {
@@ -83,14 +84,21 @@ public class Phonebook<T> {
     }
 
     public boolean contactIsRepeatedOrExists(Contact c) {
+        if (phoneBook.empty())
+            return false;
         phoneBook.findFirst();
-        while (phoneBook.retrieve() != null) {
+        while (!phoneBook.last()) {
             boolean equalNumber = c.getPhoneNumber() == phoneBook.retrieve().getPhoneNumber();
             boolean equalName = c.getName().equalsIgnoreCase(phoneBook.retrieve().getName());
             if (equalNumber || equalName)
                 return true;
             phoneBook.findNext();
         }
+        // Code below is to check the last contact in the list
+        boolean equalNumber = c.getPhoneNumber() == phoneBook.retrieve().getPhoneNumber();
+        boolean equalName = c.getName().equalsIgnoreCase(phoneBook.retrieve().getName());
+        if (equalNumber || equalName)
+            return true;
         return false;
     }
 
@@ -107,27 +115,34 @@ public class Phonebook<T> {
 
     private Contact searchContactByName(String name) {
         phoneBook.findFirst();
-        while (phoneBook.retrieve() != null) {
+        while (!phoneBook.last()) {
             if (phoneBook.retrieve().getName().equalsIgnoreCase(name))
                 return phoneBook.retrieve();
             phoneBook.findNext();
         }
+        // Code below is to check the last contact in the list
+        if (phoneBook.retrieve().getName().equalsIgnoreCase(name))
+            return phoneBook.retrieve();
         return null;
     }
 
     private Contact searchContactByNumber(int number) {
         phoneBook.findFirst();
-        while (phoneBook.retrieve() != null) {
+        while (!phoneBook.last()) {
             if (phoneBook.retrieve().getPhoneNumber() == number)
                 return phoneBook.retrieve();
             phoneBook.findNext();
         }
+        // Code below is to check the last contact in the list
+        if (phoneBook.retrieve().getPhoneNumber() == number)
+            return phoneBook.retrieve();
         return null;
     }
 
     private Contact searchContactByEmailBirthdayAddress(String emailBirthdayAdress) {
         phoneBook.findFirst();
-        while (phoneBook.retrieve() != null) {
+
+        while (!phoneBook.last()) {
             // Boolean statements are initizalized every iteration to check if the input is
             // equal to the contact's email, birthday or address and to make code easier to
             // read
@@ -138,6 +153,12 @@ public class Phonebook<T> {
                 return phoneBook.retrieve();
             phoneBook.findNext();
         }
+        // Code below is to check the last contact in the list
+        boolean equalEmail = phoneBook.retrieve().getEmailAddress().equalsIgnoreCase(emailBirthdayAdress);
+        boolean equalBirthday = phoneBook.retrieve().getBirthday().equalsIgnoreCase(emailBirthdayAdress);
+        boolean equalAddress = phoneBook.retrieve().getAdress().equalsIgnoreCase(emailBirthdayAdress);
+        if (equalAddress || equalBirthday || equalEmail)
+            return phoneBook.retrieve();
         return null;
     }
 
@@ -234,26 +255,38 @@ public class Phonebook<T> {
         }
         phoneBook.findFirst();
         int countPrints = 0;
-        while (phoneBook.retrieve() != null) {
+        while (!phoneBook.last()) {
             if (phoneBook.retrieve().getFirstName().equalsIgnoreCase(firstName)) {
                 System.out.println(phoneBook.retrieve().toString());
                 countPrints++;
             }
             phoneBook.findNext();
         }
+        // Code below is to check the last contact in the list
+        if (phoneBook.retrieve().getFirstName().equalsIgnoreCase(firstName)) {
+            System.out.println(phoneBook.retrieve().toString());
+            countPrints++;
+        }
         if (countPrints == 0)
             System.out.println("No contacts found!");
     }
 
     public boolean findEventConflicts(String date, String time) {
+        if (eventList.empty())
+            return false;
         eventList.findFirst();
-        while (eventList.retrieve() != null) {
+        while (!phoneBook.last()) {
             boolean equalDate = eventList.retrieve().getDate().equalsIgnoreCase(date);
             boolean equalTime = eventList.retrieve().getTime().equalsIgnoreCase(time);
             if (equalDate && equalTime)
                 return true;
             eventList.findNext();
         }
+        // Code below is to check the last event in the list
+        boolean equalDate = eventList.retrieve().getDate().equalsIgnoreCase(date);
+        boolean equalTime = eventList.retrieve().getTime().equalsIgnoreCase(time);
+        if (equalDate && equalTime)
+            return true;
         return false;
     }
 
@@ -293,15 +326,21 @@ public class Phonebook<T> {
         }
         eventList.findFirst();
         int countPrints = 0;
-        while (eventList.retrieve() != null) {
+        while (!phoneBook.last()) {
             if (eventList.retrieve().getEventParticipant().getName().equalsIgnoreCase(name)) {
                 System.out.println(eventList.retrieve().toString());
                 countPrints++;
             }
             eventList.findNext();
         }
+        // Code below is to check the last event in the list
+        if (eventList.retrieve().getEventParticipant().getName().equalsIgnoreCase(name)) {
+            System.out.println(eventList.retrieve().toString());
+            countPrints++;
+        }
         if (countPrints == 0)
             System.out.println("No events found!");
+
     }
 
     private void printEvent(String eventTitle) {
@@ -310,14 +349,17 @@ public class Phonebook<T> {
             return;
         }
         eventList.findFirst();
-        while (eventList.retrieve() != null) {
+        while (!phoneBook.last()) {
             if (eventList.retrieve().getTitle().equalsIgnoreCase(eventTitle)) {
                 System.out.println(eventList.retrieve().toString());
                 return;
             }
             eventList.findNext();
         }
-        System.out.println("Event not found!");
+        // Code below is to check the last event in the list
+        if (eventList.retrieve().getTitle().equalsIgnoreCase(eventTitle))
+            System.out.println(eventList.retrieve().toString());
+
     }
 
     private void printEventDetails() {
@@ -350,10 +392,14 @@ public class Phonebook<T> {
             return;
         }
         eventList.findFirst();
-        while (eventList.retrieve() != null) {
+
+        while (!phoneBook.last()) {
             System.out.println(eventList.retrieve().toString());
             eventList.findNext();
         }
+        // Code below is to print the last event in the list
+        System.out.println(eventList.retrieve().toString());
+
     }
 
     public static void main(String[] args) {
