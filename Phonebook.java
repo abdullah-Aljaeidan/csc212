@@ -275,7 +275,7 @@ public class Phonebook<T> {
         if (eventList.empty())
             return false;
         eventList.findFirst();
-        while (!phoneBook.last()) {
+        while (!eventList.last()) {
             boolean equalDate = eventList.retrieve().getDate().equalsIgnoreCase(date);
             boolean equalTime = eventList.retrieve().getTime().equalsIgnoreCase(time);
             if (equalDate && equalTime)
@@ -311,7 +311,7 @@ public class Phonebook<T> {
             }
             System.out.print("Enter event location: ");
             String eventLocation = input.nextLine();
-            Event event = new Event(eventTitle, eventTaree5, eventLocation, eventTime, contact);
+            Event event = new Event(eventTitle, eventTaree5, eventLocation, eventTime, contactName);
 
             eventList.insert(event);
             System.out.println("Event scheduled successfully!");
@@ -326,15 +326,15 @@ public class Phonebook<T> {
         }
         eventList.findFirst();
         int countPrints = 0;
-        while (!phoneBook.last()) {
-            if (eventList.retrieve().getEventParticipant().getName().equalsIgnoreCase(name)) {
+        while (!eventList.last()) {
+            if (eventList.retrieve().getContactName().equalsIgnoreCase(name)) {
                 System.out.println(eventList.retrieve().toString());
                 countPrints++;
             }
             eventList.findNext();
         }
         // Code below is to check the last event in the list
-        if (eventList.retrieve().getEventParticipant().getName().equalsIgnoreCase(name)) {
+        if (eventList.retrieve().getContactName().equalsIgnoreCase(name)) {
             System.out.println(eventList.retrieve().toString());
             countPrints++;
         }
@@ -349,7 +349,7 @@ public class Phonebook<T> {
             return;
         }
         eventList.findFirst();
-        while (!phoneBook.last()) {
+        while (!eventList.last()) {
             if (eventList.retrieve().getTitle().equalsIgnoreCase(eventTitle)) {
                 System.out.println(eventList.retrieve().toString());
                 return;
@@ -393,7 +393,7 @@ public class Phonebook<T> {
         }
         eventList.findFirst();
 
-        while (!phoneBook.last()) {
+        while (!eventList.last()) {
             System.out.println(eventList.retrieve().toString());
             eventList.findNext();
         }

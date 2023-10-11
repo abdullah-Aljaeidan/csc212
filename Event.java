@@ -3,15 +3,14 @@ import java.lang.Comparable;
 public class Event implements Comparable<Event> {
     // Event = 1 to 1 "events" which justify deleting an entire event when one (1)
     // contact is removed from event
-    String title, date, location, time;
-    Contact eventParticipant;
+    private String title, date, location, time, contactName;
 
-    public Event(String title, String date, String location, String time, Contact eventParticipant) {
+    public Event(String title, String date, String location, String time, String contactName) {
         this.title = title;
         this.date = date;
         this.location = location;
         this.time = time;
-        this.eventParticipant = eventParticipant;
+        this.contactName = contactName;
     }
 
     public String getTitle() {
@@ -30,8 +29,8 @@ public class Event implements Comparable<Event> {
         return time;
     }
 
-    public Contact getEventParticipant() {
-        return eventParticipant;
+    public String getContactName() {
+        return contactName;
     }
 
     public String toString() {
@@ -39,10 +38,9 @@ public class Event implements Comparable<Event> {
         result += "Date: " + this.date + "\n";
         result += "Time: " + this.time + "\n";
         result += "Location: " + this.location + "\n";
-        result += "Contact Name: " + this.eventParticipant.getName() + "\n";
+        result += "Contact Name: " + this.contactName + "\n";
         return result;
     }
-
 
     public int compareTo(Event otherEvent) {
         return this.title.compareTo(otherEvent.title);
