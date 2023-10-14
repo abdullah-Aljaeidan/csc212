@@ -13,6 +13,7 @@ public class LinkedlistADT<T extends Comparable<T>> {
         return head == null;
     }
 
+    // Checks if current is at the end of the list
     public boolean last() {
         return current.getNext() == null;
     }
@@ -27,14 +28,17 @@ public class LinkedlistADT<T extends Comparable<T>> {
         current = current.getNext();
     }
 
+    // Returns the current node
     public T retrieve() {
         return current.getData();
     }
 
+    // Updates the current node's data
     public void update(T val) {
         current.setData(val);
     }
 
+    // Inserts a new node (in order)
     public void insert(T val) {
         Node<T> tmp = new Node<T>(val);
         if (empty()) {
@@ -65,6 +69,7 @@ public class LinkedlistADT<T extends Comparable<T>> {
         }
     }
 
+    // Deletes the current node
     public void remove() {
         if (current == head) {
             head = head.getNext();
@@ -84,41 +89,3 @@ public class LinkedlistADT<T extends Comparable<T>> {
     }
 }
 
-/*
- * public void EventAdapter(String name){
- * Contact con =returnContactbyName(name);
- * if(con==null)
- * System.out.println("");
- * 
- * }
- * 
- * 
- * 
- * /*
- * title="lunch"
- * date="2022/2/2"
- * loc="riyadh"....
- * time="10:30"
- * contact name= "aziz"
- * if(contactExists(aziz) && findConflict(String date, String time)){
- * Contact newC = new Contact(returnContactbyname(aziz)) // we dont have to
- * worry wethere if returncontactbyname returns null because contactsExists will
- * return false
- * Event E1 = new Event(title,date,loc,newC);
- * addAllevents(E1);
- * 
- * 
- * 
- * }
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- */

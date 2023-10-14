@@ -5,6 +5,7 @@ public class Event implements Comparable<Event> {
     // contact is removed from event
     private String title, date, location, time, contactName;
 
+    // Constructor
     public Event(String title, String date, String location, String time, String contactName) {
         this.title = title;
         this.date = date;
@@ -13,6 +14,7 @@ public class Event implements Comparable<Event> {
         this.contactName = contactName;
     }
 
+    // Getters
     public String getTitle() {
         return title;
     }
@@ -33,6 +35,7 @@ public class Event implements Comparable<Event> {
         return contactName;
     }
 
+    // ToString method for printing events
     public String toString() {
         String result = "Title: " + this.title + "\n";
         result += "Date: " + this.date + "\n";
@@ -42,6 +45,7 @@ public class Event implements Comparable<Event> {
         return result;
     }
 
+    // CompareTo method for sorting events
     public int compareTo(Event otherEvent) {
         return this.title.compareTo(otherEvent.title);
     }
