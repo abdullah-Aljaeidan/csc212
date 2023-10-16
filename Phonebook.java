@@ -1,31 +1,40 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+// Phonebook class that contains all the methods to run the phonebook
 public class Phonebook<T> {
 
     // LinkedlistADT is a custom linked list class that we made for this project
-    private LinkedlistADT<Contact> phoneBook;
-    private LinkedlistADT<Event> eventList;
+    private LinkedListADT<Contact> phoneBook;
+    private LinkedListADT<Event> eventList;
     // Scanner object to read user input
     private Scanner input;
 
     // Default constructor
     public Phonebook() {
-        phoneBook = new LinkedlistADT<>();
-        eventList = new LinkedlistADT<Event>();
+        phoneBook = new LinkedListADT<>();
+        eventList = new LinkedListADT<Event>();
         input = new Scanner(System.in);
     }
 
     // Pseudo-Main method (run method is called in main method)
+
     public void run() {
         // Option variable to store user input
-        int option;
+        int option = 212;
         // Do-while loop to display menu and read user input
         do {
             // Display menu
             displayMenu();
             // Read user input
-            option = input.nextInt();
-            input.nextLine();
+            try {
+                option = input.nextInt();
+                input.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid option!");
+                input.nextLine();
+                continue;
+            }
             // Switch to call methods based on user input
             switch (option) {
                 // Add a contact
@@ -59,6 +68,7 @@ public class Phonebook<T> {
                 // Exit
                 case 8:
                     System.out.println("Goodbye!");
+                    break;
                 default:
                     System.out.println("Wrong input! Please enter a valid option.");
             }
@@ -84,17 +94,55 @@ public class Phonebook<T> {
     private Contact createContact() {
         System.out.print("Enter the contact's first name: ");
         String firstName = input.nextLine();
+
         System.out.print("Enter the contact's last name: ");
         String lastName = input.nextLine();
-        System.out.print("Enter the contact's phone number: ");
-        int phoneNumber = input.nextInt();
-        input.nextLine(); // Consume the newline character
+
+        System.out.print("Enter the contact's phone number (No hyphens or brackets!): ");
+        String phoneNumber = input.nextLine();
+
+        // Check if phone number is valid
+        for (int i = 0; i < phoneNumber.length(); i++) {
+            boolean isLetter = Character.isLetter(phoneNumber.charAt(i));
+            boolean isSpace = Character.isSpaceChar(phoneNumber.charAt(i));
+            boolean isSpecialChar = phoneNumber.charAt(i) == '(' || phoneNumber.charAt(i) == ')'
+                    || phoneNumber.charAt(i) == '-';
+            boolean lessOrMoreThan10Digits = phoneNumber.length() < 10 || phoneNumber.length() > 10;
+            if (isLetter || isSpace || isSpecialChar || lessOrMoreThan10Digits) {
+                System.out.println("Please enter a valid phone number!");
+                return null;
+            }
+        }
+
         System.out.print("Enter the contact's email: ");
         String email = input.nextLine();
+
+        // Check if email is valid
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == '@')
+                break;
+            if (i == email.length() - 1) {
+                System.out.println("Please enter a valid email address!");
+                return null;
+            }
+        }
+
         System.out.print("Enter the contact's address: ");
         String address = input.nextLine();
+
         System.out.print("Enter the contact's birthday: ");
         String birthday = input.nextLine();
+
+        // Check if birthday is valid
+        for (int i = 0; i < birthday.length(); i++) {
+            if (birthday.charAt(i) == '/')
+                break;
+            if (i == birthday.length() - 1) {
+                System.out.println("Please enter a valid birthday!");
+                return null;
+            }
+        }
+
         System.out.print("Enter any notes for the contact: ");
         String notes = input.nextLine();
 
@@ -126,7 +174,10 @@ public class Phonebook<T> {
     // Method to add a contact to the phonebook
     private void addContact() {
         Contact newContact = createContact();
-        if (contactIsRepeatedOrExists(newContact)) {
+        if (newContact == null) {
+            System.out.println("Contact not created!");
+            return;
+        } else if (contactIsRepeatedOrExists(newContact)) {
             System.out.println("Contact already exists!");
             return;
         } else {
@@ -150,15 +201,15 @@ public class Phonebook<T> {
     }
 
     // Method to search and return a contact by number if it exists
-    private Contact searchContactByNumber(int number) {
+    private Contact searchContactByNumber(String number) {
         phoneBook.findFirst();
         while (!phoneBook.last()) {
-            if (phoneBook.retrieve().getPhoneNumber() == number)
+            if (phoneBook.retrieve().getPhoneNumber().equals(number))
                 return phoneBook.retrieve();
             phoneBook.findNext();
         }
         // Code below is to check the last contact in the list
-        if (phoneBook.retrieve().getPhoneNumber() == number)
+        if (phoneBook.retrieve().getPhoneNumber().equals(number))
             return phoneBook.retrieve();
         return null;
     }
@@ -191,7 +242,6 @@ public class Phonebook<T> {
     private void searchContact() {
         String emailBirthdayAdress;
         Contact contact;
-        System.out.println("Enter search criteria:");
         System.out.println("1- Name");
         System.out.println("2- Phone number");
         System.out.println("3- Email address");
@@ -217,8 +267,7 @@ public class Phonebook<T> {
             // Search by number
             case 2:
                 System.out.print("Enter the contact's phone number: ");
-                int phoneNumber = input.nextInt();
-                input.nextLine();
+                String phoneNumber = input.nextLine();
                 contact = searchContactByNumber(phoneNumber);
                 if (contact != null) {
                     System.out.println("Contact found!");
@@ -228,7 +277,7 @@ public class Phonebook<T> {
                 break;
             // Search by email (Method called accepts email, birthday or address)
             case 3:
-                System.out.println("Enter the contact's email address");
+                System.out.print("Enter the contact's email address: ");
                 emailBirthdayAdress = input.nextLine();
                 contact = searchContactByEmailBirthdayAddress(emailBirthdayAdress);
                 if (contact != null) {
@@ -239,7 +288,7 @@ public class Phonebook<T> {
                 break;
             // Search by address (Method called accepts email, birthday or address)
             case 4:
-                System.out.println("Enter the contact's address");
+                System.out.print("Enter the contact's address: ");
                 emailBirthdayAdress = input.nextLine();
                 contact = searchContactByEmailBirthdayAddress(emailBirthdayAdress);
                 if (contact != null) {
@@ -250,7 +299,7 @@ public class Phonebook<T> {
                 break;
             // Search by birthday (Method called accepts email, birthday or address)
             case 5:
-                System.out.println("Enter the contact's birthday");
+                System.out.print("Enter the contact's birthday: ");
                 emailBirthdayAdress = input.nextLine();
                 contact = searchContactByEmailBirthdayAddress(emailBirthdayAdress);
                 if (contact != null) {
@@ -354,9 +403,41 @@ public class Phonebook<T> {
             return;
         } else {
             System.out.print("Enter event date (DD/MM/YYYY): ");
-            String eventDate = input.nextLine();
-            System.out.print("Enter event time (HH:MM): ");
-            String eventTime = input.nextLine();
+            boolean checkDate = true;
+            String eventDate = "D. Mohammed Aldalhan";
+            do {
+                eventDate = input.nextLine();
+                if (eventDate.length() != 10) {
+                    System.out.println("Please enter a valid date!");
+                    System.out.print("Enter event date (DD/MM/YYYY): ");
+                    continue;
+                } else if (eventDate.charAt(2) != '/' || eventDate.charAt(5) != '/') {
+                    System.out.println("Please enter a valid date!");
+                    System.out.print("Enter event date (DD/MM/YYYY): ");
+                    continue;
+                } else {
+                    checkDate = false;
+                }
+
+            } while (checkDate);
+            System.out.print("Enter event time (HH:MM 24-Hour): ");
+            String eventTime = "bigO";
+            boolean checkTime = true;
+            do {
+                eventTime = input.nextLine();
+                if (eventTime.length() != 5) {
+                    System.out.println("Please enter a valid time!");
+                    System.out.print("Enter event time (HH:MM 24-Hour): ");
+                    continue;
+                } else if (eventTime.charAt(2) != ':') {
+                    System.out.println("Please enter a valid time!");
+                    System.out.print("Enter event time (HH:MM 24-Hour): ");
+                    continue;
+                } else {
+                    checkTime = false;
+                }
+
+            } while (checkTime);
             // Check if event already exists at the same date and time
             if (findEventConflicts(eventDate, eventTime)) {
                 System.out.println("The event conflicts with an existing event!");

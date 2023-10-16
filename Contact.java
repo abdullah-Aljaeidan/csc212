@@ -5,14 +5,14 @@ public class Contact implements Comparable<Contact> {
     private String firstName;
     private String lastName;
     private String name;
-    private int phoneNumber;
+    private String phoneNumber;
     private String emailAddress;
     private String adress;
     private String birthday;
     private String notes;
 
     // Constructor
-    public Contact(String firstName, String lastName, int phoneNumber, String emailAddress, String adress,
+    public Contact(String firstName, String lastName, String phoneNumber, String emailAddress, String adress,
             String birthday, String notes) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,11 +33,11 @@ public class Contact implements Comparable<Contact> {
         this.name = name;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -98,7 +98,7 @@ public class Contact implements Comparable<Contact> {
                 "Notes: " + notes;
     }
 
-    // CompareTo method for sorting contacts
+    // CompareTo method for sorting contacts 
     public int compareTo(Contact otherContact) {
         return this.name.compareTo(otherContact.name);
     }
